@@ -7,6 +7,11 @@ Roles:
 - developerportal-rest-configurator
   - These are configuration tasks that strictly leverage the REST APIs provided by webMethods Developer Portal (and as such, these tasks can be run from anywhere with network access to the target webMethods Developer Portal REST endpoints)
 
+## Project dependencies:
+
+Some of the tasks in these roles will have dependencies on tasks defined in [sagdevops-ansible-common-utils](https://github.com/SoftwareAG/sagdevops-ansible-common-utils)
+As such, make sure to include sagdevops-ansible-common-utils in your automation solution.
+
 ## Role: developerportal-files-configurator
 
 Documentation Details TBD
