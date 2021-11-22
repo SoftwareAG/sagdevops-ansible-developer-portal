@@ -1,0 +1,21 @@
+---
+
+## note: configs_action should be the path to the task playbook in this role
+## ie. for updating user password: configs_action=user_management/update-user-password
+
+- name: Print the params
+  debug:
+    msg: "Running developerportal-rest-configurator with action {{ configs_action | default('undefined') }}"
+
+- name: fail if configs_action not specified
+  fail: 
+    msg: "configs_action not specified...cannot do anything."
+  when: configs_action is not defined or configs_action == ""
+
+- debug:
+    msg: "Action {{ configs_action }} will not run due to configs_enabled == {{ configs_enabled | default('true',true) }}"
+  when: configs_enabled | default('true',true) | bool == false
+
+- name: Include tasks
+  include_tasks: "{{ configs_action }}.yml"
+  when: configs_enabled | default('true',true) | bool
