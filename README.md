@@ -20,6 +20,46 @@ Documentation Details TBD
 
 Documentation Details TBD
 
+## Using Containers
+
+### Building the containers
+
+To build containers for the configurators
+
+First set some environment variables to specify the build arguments:
+
+```
+export REG=
+export TAG=0.0.1
+export SAGDEVOPS_BASE_ANSIBLE=${REG}sagdevops-ansible-common-utils:0.0.1
+```
+
+Then, build the configurators by running:
+
+```
+docker build --rm -f Dockerfile.rest -t ${REG}developerportal-rest-configurator:${TAG} --build-arg BASE_ANSIBLE_IMAGE=${SAGDEVOPS_BASE_ANSIBLE} .
+
+docker build --rm -f Dockerfile.files -t ${REG}developerportal-files-configurator:${TAG} --build-arg BASE_ANSIBLE_IMAGE=${SAGDEVOPS_BASE_ANSIBLE} .
+```
+
+This will create 2 containers:
+ - ${REG}developerportal-rest-configurator:${TAG}
+ - ${REG}developerportal-rest-configurator:${TAG}
+
+### Testing validity of the containers
+
+Test developerportal-rest-configurator:
+
+```
+docker run ${REG}developerportal-rest-configurator:${TAG} ping.yml
+```
+
+Test developerportal-files-configurator:
+
+```
+docker run ${REG}developerportal-files-configurator:${TAG} ping.yml
+```
+
 # Authors
 Fabien Sanglier
 - Emails: [@Software AG](mailto:fabien.sanglier@softwareag.com) [@Software AG Government Solutions](mailto:fabien.sanglier@softwareaggov.com)
