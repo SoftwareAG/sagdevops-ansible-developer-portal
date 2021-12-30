@@ -9,8 +9,8 @@ Roles:
 
 ## Project dependencies:
 
-Some of the tasks in these roles will have dependencies on tasks defined in [sagdevops-ansible-common-utils](https://github.com/SoftwareAG/sagdevops-ansible-common-utils)
-As such, make sure to include sagdevops-ansible-common-utils in your automation solution.
+Some of the tasks in these roles will have dependencies on tasks defined in [sagdevops-ansible-common](https://github.com/SoftwareAG/sagdevops-ansible-common)
+As such, make sure to include sagdevops-ansible-common in your automation solution.
 
 ## Role: developerportal-files-configurator
 
@@ -31,7 +31,7 @@ First set some environment variables to specify the build arguments:
 ```
 export REG=
 export TAG=0.0.1
-export SAGDEVOPS_BASE_ANSIBLE=${REG}sagdevops-ansible-common-utils:0.0.1
+export SAGDEVOPS_BASE_ANSIBLE=${REG}sagdevops-ansible-common:0.0.1
 ```
 
 Then, build the configurators by running:
