@@ -1,0 +1,6 @@
+---
+
+  - import_role: 
+      name: configure-jvm-wrapper
+    vars:
+      configs_action: set-jvm-params
