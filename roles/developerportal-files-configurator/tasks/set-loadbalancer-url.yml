@@ -22,6 +22,14 @@
           configs_action: set-jvm-params
           rvar_wrapper_file: "{{ custom_wrapper_file }}"
           jvm_params: "{{ jvm_params_dict }}"    
+
+      - import_role: 
+          name: configure-jvm-wrapper
+        vars:
+          configs_action: remove-jvm-params
+          rvar_wrapper_file: "{{ dpo_wrapper_file }}"
+          jvm_params_regex_patterns:
+            - "-Dcom\\.softwareag\\.portal\\.umc\\.loadbalancer\\.url="
   
       - name: cleanup facts
         set_fact:
@@ -29,3 +37,6 @@
           jvm_params_wrapper_index: ""
 
     when: rvars_devportal_loadbalancer_url is defined and rvars_devportal_loadbalancer_url != ""
+
+
+    

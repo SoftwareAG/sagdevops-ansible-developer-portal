@@ -3,11 +3,38 @@
   - debug: var=rvars_devportal_license_path_wrapper_index verbosity=1
   - debug: var=rvars_devportal_license_path verbosity=1
 
+  - name: Fail if no elastic search uris are specified
+    fail: 
+      msg: "A List of elastic search uris must be specified..."
+    when: rvars_devportal_license_path is not defined or rvars_devportal_license_path == ""
+
+  - name: Create the jvm_params dictionary
+    set_fact:
+      jvm_params_wrapper_index: "{{ rvars_devportal_license_path_wrapper_index | int }}"
+      jvm_params_dict: "{{ jvm_params_dict | default({}) }}"
+  
+  - name: add new key / value pairs to dict
+    set_fact:
+      jvm_params_dict: "{{ jvm_params_dict | combine({item.key: item.value}) }}"
+    with_items:
+      - {'key': "wrapper.java.additional.{{ jvm_params_wrapper_index }}", 'value': "-Dportal.server.config.license={{ rvars_devportal_license_path }}"}      
+
   - import_role: 
       name: configure-jvm-wrapper
     vars:
       configs_action: set-jvm-params
       rvar_wrapper_file: "{{ custom_wrapper_file }}"
-      jvm_params:
-        "wrapper.java.additional.{{ rvars_devportal_license_path_wrapper_index }}": "-Dportal.server.config.license={{ rvars_devportal_license_path }}"
-    when: rvars_devportal_license_path is defined and rvars_devportal_license_path != ""
+      jvm_params: "{{ jvm_params_dict }}"
+  
+  - import_role: 
+      name: configure-jvm-wrapper
+    vars:
+      configs_action: remove-jvm-params
+      rvar_wrapper_file: "{{ dpo_wrapper_file }}"
+      jvm_params_regex_patterns:
+        - "-Dportal\\.server\\.config\\.license="
+
+  - name: cleanup facts
+    set_fact:
+      jvm_params_dict: {}
+      jvm_params_wrapper_index: ""
