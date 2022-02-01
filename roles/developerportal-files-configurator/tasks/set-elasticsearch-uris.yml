@@ -3,14 +3,24 @@
   - debug: var=rvars_devportal_elasticsearch_uris_wrapper_index verbosity=1
   - debug: var=rvars_devportal_elasticsearch_uris verbosity=1
 
+  - name: Fail if no elastic search uris are specified
+    fail: 
+      msg: "A List of elastic search uris must be specified..."
+    when: rvars_devportal_elasticsearch_uris is not defined or (rvars_devportal_elasticsearch_uris | length) == 0
+
+  - name: Create the jvm_params dictionary
+    set_fact:
+      jvm_params_dict_startindex: "{{ rvars_devportal_elasticsearch_uris_wrapper_index | int }}"
+      jvm_params_dict: "{{ jvm_params_dict | default({}) }}"
+  
+  - name: add new key / value pairs to dict
+    set_fact:
+      jvm_params_dict: "{{ jvm_params_dict | combine({item.key: item.value}) }}"
+    with_items:
+      - {'key': "wrapper.java.additional.{{ jvm_params_dict_startindex }}", 'value': "-Dspring.elasticsearch.rest.uris={{ rvars_devportal_elasticsearch_uris | default('[]',true) | join(',') }}"}      
+
   - import_role: 
       name: configure-jvm-wrapper
     vars:
       configs_action: set-jvm-params
-      jvm_params:
-        - {'key': "wrapper.java.additional.{{ rvars_devportal_elasticsearch_uris_wrapper_index }}", 'value': "-Dspring.elasticsearch.rest.uris={{ rvars_devportal_elasticsearch_uris | default('[]',true) | join(',') }}"}      
-    when: rvars_devportal_elasticsearch_uris is defined and rvars_devportal_elasticsearch_uris != ""
-    
-
-
-    
+      jvm_params: "{{ jvm_params_dict }}"    
