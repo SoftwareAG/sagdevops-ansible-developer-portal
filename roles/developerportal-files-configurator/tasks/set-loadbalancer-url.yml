@@ -8,5 +8,5 @@
     vars:
       configs_action: set-jvm-params
       jvm_params:
-        "wrapper.java.additional.{{ rvars_devportal_loadbalancer_url_wrapper_index }}": "-Dcom.softwareag.portal.umc.loadbalancer.url={{ rvars_devportal_loadbalancer_url }}"
+        - {'key': "wrapper.java.additional.{{ rvars_devportal_loadbalancer_url_wrapper_index }}", 'value': "-Dcom.softwareag.portal.umc.loadbalancer.url={{ rvars_devportal_loadbalancer_url }}"}      
     when: rvars_devportal_loadbalancer_url is defined and rvars_devportal_loadbalancer_url != ""

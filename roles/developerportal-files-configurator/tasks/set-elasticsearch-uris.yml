@@ -8,5 +8,9 @@
     vars:
       configs_action: set-jvm-params
       jvm_params:
-        "wrapper.java.additional.{{ rvars_devportal_elasticsearch_uris_wrapper_index }}": "-Dspring.elasticsearch.rest.uris={{ rvars_devportal_elasticsearch_uris | default('[]',true) | join(',') }}"
+        - {'key': "wrapper.java.additional.{{ rvars_devportal_elasticsearch_uris_wrapper_index }}", 'value': "-Dspring.elasticsearch.rest.uris={{ rvars_devportal_elasticsearch_uris | default('[]',true) | join(',') }}"}      
     when: rvars_devportal_elasticsearch_uris is defined and rvars_devportal_elasticsearch_uris != ""
+    
+
+
+    

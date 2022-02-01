@@ -8,12 +8,12 @@
       msg: "a List of clustering peers must be specified..."
     when: rvars_devportal_clustering_peers is not defined or (rvars_devportal_clustering_peers | length) == 0
 
-  - name: Create the peer dictionnary
+  - name: Create the jvm_params dictionary
     set_fact:
       jvm_params_clustering_startindex: "{{ rvars_devportal_clustering_wrapper_index | int }}"
       jvm_params_clustering: "{{ jvm_params_clustering | default({ 'wrapper.java.additional.' + (jvm_params_clustering_startindex) : '-Dportal.server.cache.distributed.enabled=true' }) }}"
   
-  - name: Create the peer dictionnary
+  - name: Add peers to dictionnary
     set_fact: 
       jvm_params_clustering: "{{ jvm_params_clustering | combine ({ 'wrapper.java.additional.' + (jvm_params_clustering_startindex + 1) : '-Dportal.server.cache.distributed.cluster.peers.' + ansible_loop.index0 + '=' item }) }}"
     with_items: "{{ rvars_devportal_clustering_peers }}"
