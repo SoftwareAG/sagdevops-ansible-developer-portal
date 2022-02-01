@@ -1,0 +1,35 @@
+---
+
+  - debug: var=rvars_devportal_clustering_wrapper_index verbosity=1
+  - debug: var=rvars_devportal_clustering_peers verbosity=1
+
+  - name: Fail if no clustering peers are specified
+    fail: 
+      msg: "a List of clustering peers must be specified..."
+    when: rvars_devportal_clustering_peers is not defined or (rvars_devportal_clustering_peers | length) == 0
+
+  - name: Create the peer dictionnary
+    set_fact:
+      jvm_params_clustering_startindex: "{{ rvars_devportal_clustering_wrapper_index | int }}"
+      jvm_params_clustering: "{{ jvm_params_clustering | default({ 'wrapper.java.additional.' + (jvm_params_clustering_startindex) : '-Dportal.server.cache.distributed.enabled=true' }) }}"
+  
+  - name: Create the peer dictionnary
+    set_fact: 
+      jvm_params_clustering: "{{ jvm_params_clustering | combine ({ 'wrapper.java.additional.' + (jvm_params_clustering_startindex + 1) : '-Dportal.server.cache.distributed.cluster.peers.' + ansible_loop.index0 + '=' item }) }}"
+    with_items: "{{ rvars_devportal_clustering_peers }}"
+
+  - debug: var=jvm_params_clustering verbosity=1
+
+  # - import_role: 
+  #     name: configure-jvm-wrapper
+  #   vars:
+  #     configs_action: set-jvm-params
+  #     jvm_params:
+  #       "wrapper.java.additional.{{ rvars_devportal_license_path_wrapper_index }}": "-Dportal.server.cache.distributed.enabled=true"
+
+
+# wrapper.java.additional.310=-Dportal.server.cache.distributed.enabled=true
+# wrapper.java.additional.311=-Dportal.server.cache.distributed.cluster.peers.0=<devPortal1_hostname>:47500..47509
+# wrapper.java.additional.311=-Dportal.server.cache.distributed.cluster.peers.1=<devPortal2_hostname>:47500..47509
+# wrapper.java.additional.311=-Dportal.server.cache.distributed.cluster.peers.2=<devPortal3_hostname>:47500..47509
+

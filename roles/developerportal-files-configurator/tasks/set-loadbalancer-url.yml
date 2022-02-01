@@ -1,0 +1,12 @@
+---
+
+  - debug: var=rvars_devportal_loadbalancer_url_wrapper_index verbosity=1
+  - debug: var=rvars_devportal_loadbalancer_url verbosity=1
+
+  - import_role: 
+      name: configure-jvm-wrapper
+    vars:
+      configs_action: set-jvm-params
+      jvm_params:
+        "wrapper.java.additional.{{ rvars_devportal_loadbalancer_url_wrapper_index }}": "-Dcom.softwareag.portal.umc.loadbalancer.url={{ rvars_devportal_loadbalancer_url }}"
+    when: rvars_devportal_loadbalancer_url is defined and rvars_devportal_loadbalancer_url != ""

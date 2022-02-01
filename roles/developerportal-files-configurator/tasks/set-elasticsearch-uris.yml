@@ -1,0 +1,12 @@
+---
+
+  - debug: var=rvars_devportal_elasticsearch_uris_wrapper_index verbosity=1
+  - debug: var=rvars_devportal_elasticsearch_uris verbosity=1
+
+  - import_role: 
+      name: configure-jvm-wrapper
+    vars:
+      configs_action: set-jvm-params
+      jvm_params:
+        "wrapper.java.additional.{{ rvars_devportal_elasticsearch_uris_wrapper_index }}": "-Dspring.elasticsearch.rest.uris={{ rvars_devportal_elasticsearch_uris | default('[]',true) | join(',') }}"
+    when: rvars_devportal_elasticsearch_uris is defined and rvars_devportal_elasticsearch_uris != ""

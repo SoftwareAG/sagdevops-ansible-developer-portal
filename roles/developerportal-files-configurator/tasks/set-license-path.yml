@@ -1,0 +1,12 @@
+---
+
+  - debug: var=rvars_devportal_license_path_wrapper_index verbosity=1
+  - debug: var=rvars_devportal_license_path verbosity=1
+
+  - import_role: 
+      name: configure-jvm-wrapper
+    vars:
+      configs_action: set-jvm-params
+      jvm_params:
+        "wrapper.java.additional.{{ rvars_devportal_license_path_wrapper_index }}": "-Dportal.server.config.license={{ rvars_devportal_license_path }}"
+    when: rvars_devportal_license_path is defined and rvars_devportal_license_path != ""

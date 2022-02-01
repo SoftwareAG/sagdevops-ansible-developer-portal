@@ -4,3 +4,16 @@
 runtime_profile_home: "{{ webmethods_install_dir }}/profiles/CTP"
 custom_wrapper_file: "{{ runtime_profile_home }}/configuration/custom_wrapper.conf"
 configs_enabled: true
+
+## roles params
+rvars_devportal_license_path_wrapper_index: 4000
+rvars_devportal_license_path: ""
+
+rvars_devportal_elasticsearch_uris_wrapper_index: 4001
+rvars_devportal_elasticsearch_uris: []
+
+rvars_devportal_loadbalancer_url_wrapper_index: 4002
+rvars_devportal_loadbalancer_url: ""
+
+rvars_devportal_clustering_wrapper_index: 4010
+rvars_devportal_clustering_peers: []
