@@ -10,34 +10,32 @@
 
   - name: Create the jvm_params dictionary
     set_fact:
-      jvm_params_dict_startindex: "{{ rvars_devportal_clustering_wrapper_index | int }}"
+      jvm_params_wrapper_index: "{{ rvars_devportal_clustering_wrapper_index | int }}"
       jvm_params_dict: "{{ jvm_params_dict | default({}) }}"
   
   - name: add new key / value pairs to dict
     set_fact:
       jvm_params_dict: "{{ jvm_params_dict | combine({item.key: item.value}) }}"
     with_items:
-      - {'key': "wrapper.java.additional.{{ jvm_params_dict_startindex }}", 'value': "-Dportal.server.cache.distributed.enabled=true" }      
+      - {'key': "wrapper.java.additional.{{ jvm_params_wrapper_index }}", 'value': "-Dportal.server.cache.distributed.enabled=true" }      
 
   - name: Add peers to dictionnary
     set_fact: 
-      jvm_params_dict: "{{ jvm_params_dict | combine ({ 'wrapper.java.additional.' + ((jvm_params_dict_startindex|int + 1) | string) : '-Dportal.server.cache.distributed.cluster.peers.' + (peer_index | string) + '=' + item }) }}"
+      jvm_params_wrapper_index: "{{ jvm_params_wrapper_index | int + 1 }}"
+      jvm_params_dict: "{{ jvm_params_dict | combine ({ 'wrapper.java.additional.' + (jvm_params_wrapper_index | string) : '-Dportal.server.cache.distributed.cluster.peers.' + (peer_index | string) + '=' + item }) }}"
     with_items: "{{ rvars_devportal_clustering_peers }}"
     loop_control:
       index_var: peer_index
 
   - debug: var=jvm_params_dict verbosity=1
 
-  # - import_role: 
-  #     name: configure-jvm-wrapper
-  #   vars:
-  #     configs_action: set-jvm-params
-  #     jvm_params:
-  #       "wrapper.java.additional.{{ rvars_devportal_license_path_wrapper_index }}": "-Dportal.server.cache.distributed.enabled=true"
+  - import_role: 
+      name: configure-jvm-wrapper
+    vars:
+      configs_action: set-jvm-params
+      jvm_params: "{{ jvm_params_dict }}"
 
-
-# wrapper.java.additional.310=-Dportal.server.cache.distributed.enabled=true
-# wrapper.java.additional.311=-Dportal.server.cache.distributed.cluster.peers.0=<devPortal1_hostname>:47500..47509
-# wrapper.java.additional.311=-Dportal.server.cache.distributed.cluster.peers.1=<devPortal2_hostname>:47500..47509
-# wrapper.java.additional.311=-Dportal.server.cache.distributed.cluster.peers.2=<devPortal3_hostname>:47500..47509
-
+  - name: cleanup facts
+    set_fact:
+      jvm_params_dict: {}
+      jvm_params_wrapper_index: ""

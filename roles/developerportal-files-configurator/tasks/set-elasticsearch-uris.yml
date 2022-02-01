@@ -10,17 +10,22 @@
 
   - name: Create the jvm_params dictionary
     set_fact:
-      jvm_params_dict_startindex: "{{ rvars_devportal_elasticsearch_uris_wrapper_index | int }}"
+      jvm_params_wrapper_index: "{{ rvars_devportal_elasticsearch_uris_wrapper_index | int }}"
       jvm_params_dict: "{{ jvm_params_dict | default({}) }}"
   
   - name: add new key / value pairs to dict
     set_fact:
       jvm_params_dict: "{{ jvm_params_dict | combine({item.key: item.value}) }}"
     with_items:
-      - {'key': "wrapper.java.additional.{{ jvm_params_dict_startindex }}", 'value': "-Dspring.elasticsearch.rest.uris={{ rvars_devportal_elasticsearch_uris | default('[]',true) | join(',') }}"}      
+      - {'key': "wrapper.java.additional.{{ jvm_params_wrapper_index }}", 'value': "-Dspring.elasticsearch.rest.uris={{ rvars_devportal_elasticsearch_uris | default('[]',true) | join(',') }}"}      
 
   - import_role: 
       name: configure-jvm-wrapper
     vars:
       configs_action: set-jvm-params
-      jvm_params: "{{ jvm_params_dict }}"    
+      jvm_params: "{{ jvm_params_dict }}"
+
+  - name: cleanup facts
+    set_fact:
+      jvm_params_dict: {}
+      jvm_params_wrapper_index: ""
