@@ -23,13 +23,14 @@
       name: configure-jvm-wrapper
     vars:
       configs_action: set-jvm-params
+      rvar_wrapper_file: "{{ custom_wrapper_file }}"
       jvm_params: "{{ jvm_params_dict }}"
   
   - import_role: 
       name: configure-jvm-wrapper
     vars:
       configs_action: remove-jvm-params
-      custom_wrapper_file: "{{ dpo_wrapper_file }}"
+      rvar_wrapper_file: "{{ dpo_wrapper_file }}"
       jvm_params_regex_patterns:
         - "^.*-Dspring\\.elasticsearch\\.rest\\.uris.*$"
 

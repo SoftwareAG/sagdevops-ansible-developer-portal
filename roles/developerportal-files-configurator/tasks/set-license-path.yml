@@ -7,6 +7,7 @@
       name: configure-jvm-wrapper
     vars:
       configs_action: set-jvm-params
+      rvar_wrapper_file: "{{ custom_wrapper_file }}"
       jvm_params:
         "wrapper.java.additional.{{ rvars_devportal_license_path_wrapper_index }}": "-Dportal.server.config.license={{ rvars_devportal_license_path }}"
     when: rvars_devportal_license_path is defined and rvars_devportal_license_path != ""
