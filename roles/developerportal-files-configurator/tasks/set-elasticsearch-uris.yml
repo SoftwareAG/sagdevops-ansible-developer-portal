@@ -19,14 +19,14 @@
     with_items:
       - {'key': "wrapper.java.additional.{{ jvm_params_wrapper_index }}", 'value': "-Dspring.elasticsearch.rest.uris={{ rvars_devportal_elasticsearch_uris | default('[]',true) | join(',') }}"}      
 
-  - import_role: 
+  - include_role: 
       name: configure-jvm-wrapper
     vars:
       configs_action: set-jvm-params
       rvar_wrapper_file: "{{ custom_wrapper_file }}"
       jvm_params: "{{ jvm_params_dict }}"
   
-  - import_role: 
+  - include_role: 
       name: configure-jvm-wrapper
     vars:
       configs_action: remove-jvm-params
