@@ -32,7 +32,7 @@
       configs_action: remove-jvm-params
       rvar_wrapper_file: "{{ dpo_wrapper_file }}"
       jvm_params_regex_patterns:
-        - "^.*-Dspring\\.elasticsearch\\.rest\\.uris.*$"
+        - "-Dspring\\.elasticsearch\\.rest\\.uris="
 
   - name: cleanup facts
     set_fact:
