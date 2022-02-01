@@ -15,6 +15,7 @@
   
   - name: add new key / value pairs to dict
     set_fact:
+      jvm_params_wrapper_index: "{{ jvm_params_wrapper_index | int + 1 }}"
       jvm_params_dict: "{{ jvm_params_dict | combine({item.key: item.value}) }}"
     with_items:
       - {'key': "wrapper.java.additional.{{ jvm_params_wrapper_index }}", 'value': "-Dportal.server.cache.distributed.enabled=true" }      
