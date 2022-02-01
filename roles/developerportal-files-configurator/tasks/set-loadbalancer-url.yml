@@ -3,10 +3,23 @@
   - debug: var=rvars_devportal_loadbalancer_url_wrapper_index verbosity=1
   - debug: var=rvars_devportal_loadbalancer_url verbosity=1
 
-  - import_role: 
-      name: configure-jvm-wrapper
-    vars:
-      configs_action: set-jvm-params
-      jvm_params:
-        - {'key': "wrapper.java.additional.{{ rvars_devportal_loadbalancer_url_wrapper_index }}", 'value': "-Dcom.softwareag.portal.umc.loadbalancer.url={{ rvars_devportal_loadbalancer_url }}"}      
+  - block:
+        
+      - name: Create the jvm_params dictionary
+        set_fact:
+          jvm_params_dict_startindex: "{{ rvars_devportal_loadbalancer_url_wrapper_index | int }}"
+          jvm_params_dict: "{{ jvm_params_dict | default({}) }}"
+      
+      - name: add new key / value pairs to dict
+        set_fact:
+          jvm_params_dict: "{{ jvm_params_dict | combine({item.key: item.value}) }}"
+        with_items:
+          - {'key': "wrapper.java.additional.{{ jvm_params_dict_startindex }}", 'value': "-Dcom.softwareag.portal.umc.loadbalancer.url={{ rvars_devportal_loadbalancer_url }}"}
+
+      - import_role: 
+          name: configure-jvm-wrapper
+        vars:
+          configs_action: set-jvm-params
+          jvm_params: "{{ jvm_params_dict }}"    
+
     when: rvars_devportal_loadbalancer_url is defined and rvars_devportal_loadbalancer_url != ""
