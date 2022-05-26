@@ -35,7 +35,7 @@
     vars:
       configs_action: set-jvm-params
       rvar_wrapper_file: "{{ custom_wrapper_file }}"
-      jvm_params: "{{ jvm_params_dict }}"
+      rvar_jvm_params: "{{ jvm_params_dict }}"
 
   - name: cleanup facts
     set_fact:
