@@ -14,6 +14,16 @@ Fabien Sanglier
   - [Fabien Sanglier](https://github.com/lanimall)
   - [Fabien Sanglier @ SoftwareAG Government Solutions](https://github.com/fabien-sanglier-saggs)
 
+**Note:**
+For a sample Infrastructure-as-Code (IaC) project that leverages these roles, head on over to [webmethods-ansible-api-gateway](https://github.com/softwareag-government-solutions/webmethods-ansible-api-gateway), maintained by [SoftwareAG Government Solutions's](https://www.softwareaggov.com)
+
+# Authors
+Fabien Sanglier
+- Emails: [@Software AG](mailto:fabien.sanglier@softwareag.com) [@Software AG Government Solutions](mailto:fabien.sanglier@softwareaggov.com)
+- Github: 
+  - [Fabien Sanglier @ SoftwareAG Government Solutions](https://github.com/fabien-sanglier-saggs)
+  - [Fabien Sanglier](https://github.com/lanimall)
+
 ## Project dependencies:
 
 Some of the tasks in these roles will have dependencies on tasks defined in [sagdevops-ansible-common](https://github.com/SoftwareAG/sagdevops-ansible-common)
