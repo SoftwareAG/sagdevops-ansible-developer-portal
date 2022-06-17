@@ -7,6 +7,16 @@ Roles:
 - developerportal-rest-configurator
   - These are configuration tasks that strictly leverage the REST APIs provided by webMethods Developer Portal (and as such, these tasks can be run from anywhere with network access to the target webMethods Developer Portal REST endpoints)
 
+**Note:**
+For a sample Infrastructure-as-Code (IaC) project that leverages these roles, head on over to [webmethods-ansible-api-gateway](https://github.com/softwareag-government-solutions/webmethods-ansible-api-gateway), maintained by [SoftwareAG Government Solutions's](https://www.softwareaggov.com)
+
+# Authors
+Fabien Sanglier
+- Emails: [@Software AG](mailto:fabien.sanglier@softwareag.com) [@Software AG Government Solutions](mailto:fabien.sanglier@softwareaggov.com)
+- Github: 
+  - [Fabien Sanglier @ SoftwareAG Government Solutions](https://github.com/fabien-sanglier-saggs)
+  - [Fabien Sanglier](https://github.com/lanimall)
+
 ## Project dependencies:
 
 Some of the tasks in these roles will have dependencies on tasks defined in [sagdevops-ansible-common](https://github.com/SoftwareAG/sagdevops-ansible-common)
@@ -60,12 +70,6 @@ Test developerportal-files-configurator:
 docker run ${REG}developerportal-files-configurator:${TAG} ping.yml
 ```
 
-# Authors
-Fabien Sanglier
-- Emails: [@Software AG](mailto:fabien.sanglier@softwareag.com) [@Software AG Government Solutions](mailto:fabien.sanglier@softwareaggov.com)
-- Github: 
-  - [Fabien Sanglier @ SoftwareAG Government Solutions](https://github.com/fabien-sanglier-saggs)
-  - [Fabien Sanglier](https://github.com/lanimall)
 ______________________
 These tools are provided as-is and without warranty or support. They do not constitute part of the Software AG product suite. Users are free to use, fork and modify them, subject to the license agreement. While Software AG welcomes contributions, we cannot guarantee to include every contribution in the master project.
 _____________
