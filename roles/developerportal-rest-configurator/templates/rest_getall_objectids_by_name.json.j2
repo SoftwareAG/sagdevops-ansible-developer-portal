@@ -3,7 +3,7 @@
         {% set filter_loop = loop %}
         {% if rest_response_getall.json.result is iterable and (rest_response_getall.json.result is not string and rest_response_getall.json.result is not mapping) %}
             {%- for responseitem in rest_response_getall.json.result -%}
-                {%- if responseitem.name == filter_item.name -%}
+                {%- if responseitem.name == filter_item -%}
                     {%- if filter_loop.index0 > 0 -%},{%- endif -%}'{{ responseitem.id }}'
                 {%- endif -%}
             {%- endfor -%}

@@ -3,7 +3,7 @@
 - debug:
     msg: Begin tasks common/save-single.yml
 
-- debug: var=rvar_devportal_rest_save_single verbosity=2
+- debug: var=rvar_devportal_rest_save_single verbosity=1
 
 - name: fail if mandatory params not specified
   fail:

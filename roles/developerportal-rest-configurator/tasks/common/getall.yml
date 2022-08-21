@@ -4,7 +4,7 @@
     msg: Begin tasks common/getall.yml
 
 - name: Object type
-  debug: var=rvar_devportal_rest_objtype verbosity=2
+  debug: var=rvar_devportal_rest_objtype
 
 - name: fail if mandatory params not specified
   fail:

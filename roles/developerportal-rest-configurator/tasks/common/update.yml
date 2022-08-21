@@ -4,13 +4,13 @@
     msg: Begin tasks common/update.yml
 
 - name: Object type
-  debug: var=rvar_devportal_rest_objtype verbosity=2
+  debug: var=rvar_devportal_rest_objtype
 
 - name: Object ID to update
-  debug: var=rvar_devportal_rest_objectid verbosity=2
+  debug: var=rvar_devportal_rest_objectid verbosity=1
 
 - name: Object to update
-  debug: var=rvar_devportal_rest_object verbosity=2
+  debug: var=rvar_devportal_rest_object verbosity=1
 
 - name: fail if mandatory params not specified
   fail:

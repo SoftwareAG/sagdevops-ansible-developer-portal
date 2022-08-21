@@ -2,14 +2,14 @@
 
 # This get the list of object IDs based on provided human-readable filter list
 # rvar_object_filters:
-#   - name: "some_name1"
-#   - name: "some_name2"
+#   - "some_name1"
+#   - "some_name2"
 
 - debug:
     msg: Begin tasks common/getall-ids.yml
 
 - name: Object filters
-  debug: var=rvar_object_filters verbosity=2
+  debug: var=rvar_object_filters
 
 - name: fail if mandatory params not specified
   fail:
