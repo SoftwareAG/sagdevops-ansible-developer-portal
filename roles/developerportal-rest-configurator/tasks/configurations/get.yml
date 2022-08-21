@@ -1,0 +1,34 @@
+---
+
+- debug:
+    msg: Begin tasks configurations/create.yml
+
+- name: Object type
+  debug: var=rvar_devportal_rest_configs_category
+
+- name: fail if mandatory params not specified
+  fail:
+    msg: "A mandatory param was not defined, cannot do anything."
+  when: item is not defined
+  with_items:
+    - "{{ rvar_devportal_rest_configs_category }}"
+
+- name: Get object
+  uri:
+    url: "{{ _devportal_rest_configurations_basepath }}/{{ rvar_devportal_rest_configs_category }}"
+    method: GET
+    user: "{{ rvar_devportal_rest_auth_username }}"
+    password: "{{ rvar_devportal_rest_auth_password }}"
+    return_content: yes
+    force_basic_auth: yes
+    validate_certs: "{{ not ( rvar_devportal_rest_no_check_certs | default() | bool ) }}"
+    status_code: [200]
+    body_format: json
+    timeout: 30
+  no_log: "{{ not ( disable_no_log | default(false,true) ) }}"
+  register: rest_response_get
+
+- name: Print response
+  debug:
+    var: rest_response_get
+    verbosity: 2

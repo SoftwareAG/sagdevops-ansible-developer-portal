@@ -11,6 +11,20 @@ rvar_devportal_rest_apiversion: "v1"
 rvar_devportal_rest_base: "{{ rvar_devportal_rest_base_uri }}/rest/{{ rvar_devportal_rest_apiversion }}"
 rvar_devportal_rest_no_check_certs: false
 
+# configurations
+_devportal_rest_configurations_basepath: "{{ rvar_devportal_rest_base }}/configurations"
+
+## format for 
+# _configs_category: one of the valid category string
+# _configs_kv_list:
+#   - key: key1
+#     value: value1
+#   - key: key2
+#     value: value2
+_configurations_payload_template:
+  category: "{{ _configs_category }}"
+  properties: "{{ _configs_kv_list }}"
+
 # User management
 rvar_devportal_rest_objtype_users: "users"
 rvar_devportal_rest_objtype_groups: "groups"
