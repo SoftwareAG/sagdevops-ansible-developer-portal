@@ -1,0 +1,42 @@
+---
+
+  - debug: var=rvar_devportal_truststore_configuration_key verbosity=1
+  - debug: var=rvar_devportal_truststore_filepath verbosity=1
+  
+  - name: fail if mandatory params not specified
+    fail:
+      msg: "A mandatory param was not defined, cannot do anything."
+    when: item is not defined
+    with_items:
+      - "{{ rvar_devportal_truststore_filepath }}"
+
+  # - name: TODO - we should check if the filecontent file is there and fail if not?
+  #   stat: 
+  #     path: "path/to/file/path"
+  #   register: path_filecontent
+
+  - name: Set expected configuration key if not specified
+    set_fact:
+      rvar_devportal_truststore_configuration_key: "{{ _devportal_rest_configurations_saml_truststore_key }}"
+    when: rvar_devportal_truststore_configuration_key is not defined or rvar_devportal_truststore_configuration_key | trim == ""
+
+  - name: Set target uri
+    set_fact:
+      _curl_wrapper_target_uri: "{{ '%s/%s/files' | format( _devportal_rest_configurations_saml_basepath , rvar_devportal_truststore_configuration_key ) }}"
+
+  - name: The identified curl uri based on same truststore exist or not...
+    debug: var=_curl_wrapper_target_uri verbosity=1
+
+  - name: Upload new truststore using curl wrapper
+    include_role:
+      name: curl-wrapper
+    vars:
+      command: upload-multipart-formdata
+      curl_wrapper_target_uri: "{{ _curl_wrapper_target_uri }}"
+      curl_wrapper_basicauth_user: "{{ rvar_devportal_rest_auth_username }}"
+      curl_wrapper_basicauth_password: "{{ rvar_devportal_rest_auth_password }}"
+      curl_wrapper_no_check_certs: "{{ rvar_devportal_rest_no_check_certs }}"
+      curl_wrapper_multipart_formdata_fields: 
+        files: "@{{ rvar_devportal_truststore_filepath }}"
+      curl_wrapper_headers_fields:
+        "Accept": "application/json"

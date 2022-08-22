@@ -9,7 +9,7 @@
     msg: Begin tasks common/getall-ids.yml
 
 - name: Object filters
-  debug: var=rvar_object_filters
+  debug: var=rvar_object_filters verbosity=1
 
 - name: fail if mandatory params not specified
   fail:

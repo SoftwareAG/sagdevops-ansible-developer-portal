@@ -4,7 +4,7 @@
     msg: Begin tasks configurations/create.yml
 
 - name: Object type
-  debug: var=rvar_devportal_rest_configs_category
+  debug: var=rvar_devportal_rest_configs_category verbosity=1
 
 - name: Object to create
   debug: var=rvar_devportal_rest_configs_kv_list verbosity=1
@@ -15,16 +15,23 @@
   when: item is not defined
   with_items:
     - "{{ rvar_devportal_rest_configs_category }}"
-    - "{{ rvar_devportal_rest_configs_kv_list }}"
+    
+- name: remove from the final Payload object's _configs_kv_list all the undefined keys or the ones with value NULL
+  set_fact:
+    _configs_kv_list: "{{ (_configs_kv_list | default([])) + [ kv_item ] }}"
+  when: kv_item is defined and kv_item.key is defined and (kv_item.key | trim) != "" and kv_item.value is defined and (kv_item.value | trim | lower) != "null"
+  loop: "{{ rvar_devportal_rest_configs_kv_list }}"
+  loop_control:
+    loop_var: kv_item
 
-- name: Payload Object
+- name: Set final payload object
   set_fact:
     _configurations_payload: "{{ _configurations_payload_template }}"
   vars:
     _configs_category: "{{ rvar_devportal_rest_configs_category }}"
-    _configs_kv_list: "{{ rvar_devportal_rest_configs_kv_list }}"
+    _configs_kv_list: "{{ _configs_kv_list | default([],true) }}"
 
-- name: Payload Object
+- name: Print final payload object
   debug: var=_configurations_payload verbosity=1
 
 - name: Create object

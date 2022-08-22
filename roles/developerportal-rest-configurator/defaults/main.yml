@@ -25,6 +25,12 @@ _configurations_payload_template:
   category: "{{ _configs_category }}"
   properties: "{{ _configs_kv_list }}"
 
+# saml specifics
+_devportal_rest_configurations_saml_configuration_category: SAML
+_devportal_rest_configurations_saml_basepath: "{{ _devportal_rest_configurations_basepath }}/{{ _devportal_rest_configurations_saml_configuration_category }}"
+_devportal_rest_configurations_saml_keystore_key: "SAML_KEYSTORE_LOCATION"
+_devportal_rest_configurations_saml_truststore_key: "SAML_TRUSTSTORE_LOCATION"
+
 # User management
 rvar_devportal_rest_objtype_users: "users"
 rvar_devportal_rest_objtype_groups: "groups"

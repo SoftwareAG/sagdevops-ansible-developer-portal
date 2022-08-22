@@ -1,10 +1,10 @@
 ---
 
 - debug:
-    msg: Begin tasks configurations/create.yml
+    msg: Begin tasks configurations/get.yml
 
 - name: Object type
-  debug: var=rvar_devportal_rest_configs_category
+  debug: var=rvar_devportal_rest_configs_category verbosity=1
 
 - name: fail if mandatory params not specified
   fail:

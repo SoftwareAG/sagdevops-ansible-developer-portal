@@ -8,7 +8,7 @@
     msg: Begin tasks common/getall-single-id.yml
 
 - name: Object filters
-  debug: var=rvar_object_filter_single
+  debug: var=rvar_object_filter_single verbosity=1
 
 - name: fail if mandatory params not specified
   fail:
