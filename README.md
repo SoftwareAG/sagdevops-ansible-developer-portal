@@ -6,6 +6,13 @@ Roles:
   - These are configuration tasks that modify the files on webMethods Developer Portal server(s) (and as such, these tasks must be run on the target servers)
 - developerportal-rest-configurator
   - These are configuration tasks that strictly leverage the REST APIs provided by webMethods Developer Portal (and as such, these tasks can be run from anywhere with network access to the target webMethods Developer Portal REST endpoints)
+# Authors
+
+Fabien Sanglier
+- Emails: [@Software AG](mailto:fabien.sanglier@softwareag.com) // [@Software AG Government Solutions](mailto:fabien.sanglier@softwareaggov.com)
+- Github: 
+  - [Fabien Sanglier](https://github.com/lanimall)
+  - [Fabien Sanglier @ SoftwareAG Government Solutions](https://github.com/fabien-sanglier-saggs)
 
 **Note:**
 For a sample Infrastructure-as-Code (IaC) project that leverages these roles, head on over to [webmethods-ansible-api-gateway](https://github.com/softwareag-government-solutions/webmethods-ansible-api-gateway), maintained by [SoftwareAG Government Solutions's](https://www.softwareaggov.com)
